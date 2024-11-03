@@ -45,12 +45,24 @@ Install the Python modules need for the application
 
 `pip install -r requirements.txt`
 
+for Windows environment do:
+`py -3 -m venv venv`
+
+`. venv\Scripts\activate`
+it might be required to allow access python to excecute things. for it after activate venv run `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted`
+
+`python.exe -m pip install --upgrade pip`
+`pip install -r requirements.txt`
+
+
 3. System test the installation, by running the application on the command line. 
 The first run will exercise much of the code, and if the configuration of the AWS account is not sufficient,
 as noted in the pre-requisites above, it will fail. Common issues are (i) AWS account not configured, 
 (ii) Amazon Bedrock invoke model not configured, (iii) Amazon Titan Bedrock models not enabled for use. 
 
 `python capstone_rag.py`
+
+windows: `py -3 capstone_rag.py`
 
 When this works correctly, on the first run it will output some logging information.
 I will create and cache a FAISS vector datastore. 
