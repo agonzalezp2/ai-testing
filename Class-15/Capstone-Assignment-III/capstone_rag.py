@@ -118,7 +118,7 @@ def print_ww(*args, width: int = 100, **kwargs):
 boto3_bedrock = boto3.client('bedrock-runtime', region_name='eu-west-2')
 
 # - configure the embedding models that will be used
-bedrock_embeddings = BedrockEmbeddings(model_id="amazon.titan-embed-text-v1", client=boto3_bedrock)
+bedrock_embeddings = BedrockEmbeddings(model_id="amazon.titan-embed-text-v2:0", client=boto3_bedrock)
 
 stored_faiss_index = "llm_faiss_index"
 
