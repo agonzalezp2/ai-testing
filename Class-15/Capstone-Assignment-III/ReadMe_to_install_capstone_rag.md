@@ -49,7 +49,8 @@ for Windows environment do:
 `py -3 -m venv venv`
 
 `. venv\Scripts\activate`
-it might be required to allow access python to excecute things. for it after activate venv run `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted`
+it might be required to allow access python to excecute things. for it after activate venv run
+ `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted`
 
 `python.exe -m pip install --upgrade pip`
 `pip install -r requirements.txt`
