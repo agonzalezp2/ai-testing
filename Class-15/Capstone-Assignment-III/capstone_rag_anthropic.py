@@ -177,7 +177,7 @@ if not validate_cached_index(stored_faiss_index):
     #embeddings = voyageai_embeddings.embed_documents(docs_to_embed)
     vectorstore_faiss = FAISS.from_documents(docs, voyageai_embeddings)
     vectorstore_faiss.save_local("llm_faiss_index")
-    
+
 else:
     if verbose:
         print("Loading cached FAISS index")
@@ -226,16 +226,22 @@ if __name__ == "__main__":
     # configure the Bedrock LLM that will be used
     llm_to_use = args.llm_id if args.llm_id else default_model_id
     #llm = BedrockLLM(model_id=llm_to_use, client=boto3_bedrock, model_kwargs={})
-    llm = ChatAnthropic(model=llm_to_use)
+
+    #configure Anthropic models
+    api_key = os.getenv("ANTHROPIC_API_KEY")
+    if not api_key:
+        raise ValueError("API key is not set. Please set the ANTHROPIC_API_KEY environment variable.")
+    
+    llm = ChatAnthropic(model=llm_to_use, api_key=api_key)
 
     # configure the base prompt template that will be used
     prompt_template_to_use = args.prompt_template if args.prompt_template else default_prompt_template
-
+    
     # configure the base query that will be used
     query_to_use = args.query if args.query else default_query
 
     llm_prompt = PromptTemplate(template=prompt_template_to_use, input_variables=["context", "question"])
-
+    
     qa = RetrievalQA.from_chain_type(
         llm=llm,
         chain_type="stuff",
@@ -247,3 +253,4 @@ if __name__ == "__main__":
     )
     answer = qa.invoke({"query": query_to_use})
     print_ww(answer['result'])
+
