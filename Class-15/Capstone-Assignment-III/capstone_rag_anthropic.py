@@ -219,9 +219,9 @@ if __name__ == "__main__":
 
     args  = parse_args()
 
-    print(f"Using LLM: {args.llm_id}")
-    print(f"Using prompt template: {args.prompt_template}")
-    print(f"Using query: {args.query}")
+    # print(f"Using LLM: {args.llm_id}")
+    # print(f"Using prompt template: {args.prompt_template}")
+    # print(f"Using query: {args.query}")
 
     # configure the Bedrock LLM that will be used
     llm_to_use = args.llm_id if args.llm_id else default_model_id
@@ -238,7 +238,7 @@ if __name__ == "__main__":
     query_to_use = args.query if args.query else default_query
 
     llm_prompt = PromptTemplate(template=prompt_template_to_use, input_variables=["context", "question"])
-    
+    print("-------------------------- \n \n After LLM promt augmented \n \n")
     qa = RetrievalQA.from_chain_type(
         llm=llm,
         chain_type="stuff",
@@ -248,6 +248,7 @@ if __name__ == "__main__":
         return_source_documents=True,
         chain_type_kwargs={"prompt": llm_prompt}
     )
+    print ("-------------------------- \n \n retrival: "+qa+"\n")
     answer = qa.invoke({"query": query_to_use})
     print_ww(answer['result'])
 
