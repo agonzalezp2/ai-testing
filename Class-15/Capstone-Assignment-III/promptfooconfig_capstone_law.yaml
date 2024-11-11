@@ -1,0 +1,146 @@
+# Learn more about building a configuration: https://promptfoo.dev/docs/configuration/guide
+description: "Starter promptfoo testing configuration for Capstone RAG. This will call rag_test_driver.py to call our RAG solution"
+
+prompts:
+  - "{{topic}}"
+  
+
+providers:
+  - exec:python rag_test_driver.py llm_option_one prompt_option_three
+  - exec:python rag_test_driver.py llm_option_two prompt_option_three
+  - exec:python rag_test_driver.py llm_option_three prompt_option_three
+  
+tests:
+  # Innitial 3 cases
+  - vars:
+      topic: Is it possible that I get sentenced to prison due to failure in filings?
+    assert:
+      # For more information on assertions, see https://promptfoo.dev/docs/configuration/expected-outputs
+
+      # Make sure output contains the word "prison"
+      - type: icontains
+        value: prison
+
+
+  - vars:
+      topic: if I earned money last year do I have to pay taxes
+    assert:
+      # For more information on assertions, see https://promptfoo.dev/docs/configuration/expected-outputs
+
+      # Make sure output contains the word "taxes"
+      - type: icontains
+        value: tax
+
+      # Prefer shorter outputs
+      - type: javascript
+        value: 1 / (output.length + 1)
+
+  - vars:
+      topic: I am self-employed can I expense dinners with clients
+    assert:
+      # For more information on model-graded evals, see https://promptfoo.dev/docs/configuration/expected-outputs/model-graded
+      - type: llm-rubric
+        value: ensure that the output has tax guidance on expenses 
+        provider: anthropic:messages:claude-3-haiku-20240307
+  # p15
+  - vars:
+      topic: Can I use a credit card for federal tax deposits?
+    assert:
+      - type: icontains
+        value: "Don't use a credit or debit card to make federal tax deposits"
+
+  # - vars:
+  #     topic: Is there a penalty if I don't have an EIN when filing?
+  #   assert:
+  #     - type: icontains
+  #       value: "penalty"
+  #     - type: llm-rubric
+  #       value: ensure that the output includes a consequence for missing EIN
+  #       provider: anthropic:messages:claude-3-haiku-20240307
+
+  # - vars:
+  #     topic: Where can I find information on e-filing Forms W-2?
+  #   assert:
+  #     - type: icontains
+  #       value: SSA.gov/employer
+
+  # - vars:
+  #     topic: Can I set up an installment agreement for my employment taxes?
+  #   assert:
+  #     - type: icontains
+  #       value: "Online payment agreement" #  too broad
+  #     - type: llm-rubric
+  #       value: confirm guidance on installment options
+  #       provider: anthropic:messages:claude-3-haiku-20240307
+
+  - vars:
+      topic: How do I verify my new employee's work eligibility?
+    assert:
+      - type: icontains
+        value: Form I-9
+
+  - vars:
+      topic: How can I avoid penalties for failing to deposit taxes on time?
+    assert:
+      - type: icontains
+        value: EFTPS
+      - type: llm-rubric
+        value: output should suggest timely deposits or IRS electronic options
+        provider: anthropic:messages:claude-3-haiku-20240307
+      - type: cost
+        threshold: 0.01
+      -type: latency
+        threshold: 200
+
+  - vars:
+      topic: Is there a separate tax for nonpayroll income withholding?
+    assert:
+      - type: icontains
+        value: Form 945
+
+  # - vars:
+  #     topic: Are there resources available in Spanish?
+  #   assert:
+  #     - type: icontains
+  #       value: Spanish
+  #     - type: llm-rubric
+  #       value: ensure that the answer specifies resource availability in Spanish
+  #       provider: anthropic:messages:claude-3-haiku-20240307
+        
+  #P1212
+  - vars:
+      topic: How do I report OID income on my tax return?
+    assert:
+      - type: icontains
+        value: "Form 1099-OID"
+      - type: llm-rubric
+        value: ensure the output specifies how OID should be reported on tax returns
+        provider: anthropic:messages:claude-3-haiku-20240307
+
+  # - vars:
+  #     topic: What should I do if I didn’t receive a Form 1099-OID?
+  #   assert:
+  #     - type: icontains
+  #       value: "Form 1099-OID not received"
+  #     - type: llm-rubric
+  #       value: ensure the answer addresses steps if Form 1099-OID was not received
+  #       provider: anthropic:messages:claude-3-haiku-20240307
+
+  - vars:
+      topic: How can brokers use the OID tables for reporting?
+    assert:
+      - type: icontains
+        value: "OID tables"
+      - type: llm-rubric
+        value: confirm that the answer explains OID tables' use for brokers and reporting requirements
+        provider: anthropic:messages:claude-3-haiku-20240307
+
+  - vars:
+      topic: What is the de minimis rule for OID?
+    assert:
+      - type: icontains
+        value: "de minimis rule"
+      - type: llm-rubric
+        value: confirm that the output provides details on the threshold for OID under the de minimis rule
+        provider: anthropic:messages:claude-3-haiku-20240307
+
