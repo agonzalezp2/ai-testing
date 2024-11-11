@@ -250,5 +250,6 @@ if __name__ == "__main__":
     print(qa)
     print("\n")
     answer = qa.invoke({"query": query_to_use})
-    print_ww(answer['result'])
+    # print_ww(answer['result'])
+    print(answer['result'])
 
