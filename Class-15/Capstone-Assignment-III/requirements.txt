@@ -4,3 +4,4 @@
    langchain-aws
    pypdf
    faiss-cpu
+   langchain-anthropic
