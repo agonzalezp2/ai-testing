@@ -49,7 +49,7 @@ default_query = """Is it possible that I get sentenced to jail due to failure in
 # you will need to make that configuration change as a custom update to this script
 
 #default_model_id = "amazon.titan-text-lite-v1"
-default_model_id = "claude-3-5-haiku-20241022"
+default_model_id = "claude-3-5-haiku-latest" #https://docs.anthropic.com/en/docs/about-claude/models
 
 
 # Set verbose to False once you have the configuration working as desired
@@ -219,21 +219,18 @@ if __name__ == "__main__":
 
     args  = parse_args()
 
-    # print(f"Using LLM: {args.llm_id}")
-    # print(f"Using prompt template: {args.prompt_template}")
-    # print(f"Using query: {args.query}")
+    print(f"Using LLM: {args.llm_id}")
+    print(f"Using prompt template: {args.prompt_template}")
+    print(f"Using query: {args.query}")
 
     # configure the Bedrock LLM that will be used
     llm_to_use = args.llm_id if args.llm_id else default_model_id
     #llm = BedrockLLM(model_id=llm_to_use, client=boto3_bedrock, model_kwargs={})
 
     #configure Anthropic models
-    api_key = os.getenv("ANTHROPIC_API_KEY")
-    if not api_key:
-        raise ValueError("API key is not set. Please set the ANTHROPIC_API_KEY environment variable.")
-    
-    llm = ChatAnthropic(model=llm_to_use, api_key=api_key)
-
+    print("-------------------------- \n \n before LLM definition \n \n")
+    llm = ChatAnthropic(model=llm_to_use, api_key=os.getenv("ANTHROPIC_API_KEY"))
+    print("-------------------------- \n \n After LLM definition \n \n")
     # configure the base prompt template that will be used
     prompt_template_to_use = args.prompt_template if args.prompt_template else default_prompt_template
     
