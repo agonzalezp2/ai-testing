@@ -172,7 +172,9 @@ if not validate_cached_index(stored_faiss_index):
             raise error
 
     #vectorstore_faiss = FAISS.from_documents(docs, bedrock_embeddings)
-    vectorstore_faiss = voyageai_embeddings.embed_documents(docs)
+
+    docs_to_embed = [{"content": doc.page_content, "metadata": doc.metadata} for doc in docs]
+    vectorstore_faiss = voyageai_embeddings.embed_documents(docs_to_embed)
     vectorstore_faiss.save_local("llm_faiss_index")
 else:
     if verbose:
