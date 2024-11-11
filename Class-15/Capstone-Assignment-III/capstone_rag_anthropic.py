@@ -228,9 +228,7 @@ if __name__ == "__main__":
     #llm = BedrockLLM(model_id=llm_to_use, client=boto3_bedrock, model_kwargs={})
 
     #configure Anthropic models
-    print("-------------------------- \n \n before LLM definition \n \n")
     llm = ChatAnthropic(model=llm_to_use, api_key=os.getenv("ANTHROPIC_API_KEY"))
-    print("-------------------------- \n \n After LLM definition \n \n")
     # configure the base prompt template that will be used
     prompt_template_to_use = args.prompt_template if args.prompt_template else default_prompt_template
     
@@ -238,7 +236,7 @@ if __name__ == "__main__":
     query_to_use = args.query if args.query else default_query
 
     llm_prompt = PromptTemplate(template=prompt_template_to_use, input_variables=["context", "question"])
-    print("-------------------------- \n \n After LLM promt augmented \n \n")
+    
     qa = RetrievalQA.from_chain_type(
         llm=llm,
         chain_type="stuff",
@@ -248,7 +246,9 @@ if __name__ == "__main__":
         return_source_documents=True,
         chain_type_kwargs={"prompt": llm_prompt}
     )
-    print ("-------------------------- \n \n retrival: "+qa+"\n")
+    print ("-------------------------- \n \n retrival: \n")
+    print(qa)
+    print("\n")
     answer = qa.invoke({"query": query_to_use})
     print_ww(answer['result'])
 
