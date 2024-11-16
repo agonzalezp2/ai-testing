@@ -14,7 +14,7 @@ import os, sys, subprocess
 # Change this array to match the LLMs that you want to test with
 # These model ids map the llm_option_one, llm_option_two, llm_option_three in the Promptfoo configuration
 #llm_options = ['amazon.titan-text-lite-v1', 'amazon.titan-text-express-v1', 'anthropic.claude-3-haiku-20240307-v1:0']
-llm_options = ['claude-3-5-haiku-20241022','claude-3-opus-20240229','claude-3-opus-20240229']
+llm_options = ['claude-3-5-haiku-20241022','claude-3-sonnet-20240229','claude-3-opus-20240229']
 
 def get_llm_id_for_index(index: int) -> str:
     """
