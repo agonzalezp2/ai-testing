@@ -88,12 +88,17 @@ tests:
 
   - vars:
       topic: How are related transactions defined for Form 8300?
-      context: capstone_rag_anthropic.py
+      #context: capstone_rag_anthropic.py
     assert:
       - type: icontains-any
         value: 
           - "24-hour period"
           - "24 hour period"
+      - type: cost
+        threshold: 0.01
+      -type: latency
+        threshold: 200
+
       # - type: factuality
       #   value: the employee's manager is responsible for approvals
       #   provider: anthropic:messages:claude-3-haiku-20240307
@@ -115,10 +120,6 @@ tests:
       #   value: "Response should explain transactions within a 24-hour period may be treated as related."
       #   provider: anthropic:messages:claude-3-haiku-20240307
         
-      - type: cost
-        threshold: 0.01
-      -type: latency
-        threshold: 200
 
   - vars:
       topic: What penalties apply if Form 8300 is not filed?
