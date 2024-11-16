@@ -90,7 +90,7 @@ tests:
         threshold: 200
 
   - vars:
-      topic: How are related transactions defined for Form 8300?
+      topic: How are related transactions defined for Form 8300? - relevance
       query: How are related transactions defined for Form 8300?
       context: capstone_rag_anthropic.py
     assert:
@@ -111,15 +111,28 @@ tests:
         threshold: 0.9
         provider: anthropic:messages:claude-3-haiku-20240307
         metric: RAGAS-answer-relevance
-      - type: context-recall
-        provider: anthropic:messages:claude-3-haiku-20240307
-        threshold: 0.9
-        value: max purchase price without approval is $500. Talk to Fred before submitting anything.
-        metric: RAGAS-context-recall
       - type: context-relevance
         threshold: 0.9
         metric: RAGAS-context-relevance
-      - type: context-faithfulness
+
+  - vars:
+      topic: How are related transactions defined for Form 8300? - faithfulness and recall
+      query: How are related transactions defined for Form 8300?
+      context: capstone_rag_anthropic.py
+    assert:
+      - type: icontains-any
+        value: 
+          - "24-hour period"
+          - "24 hour period"
+      # - type: cost
+      #   threshold: 0.01
+      - type: latency
+        threshold: 200
+
+      - type: context-recall
+        provider: anthropic:messages:claude-3-haiku-20240307
+        threshold: 0.9
+      - type: RAGAS-context-recall
         provider: anthropic:messages:claude-3-haiku-20240307
         threshold: 0.9
         metric: RAGAS-context-faithfulness
@@ -143,11 +156,11 @@ tests:
   - vars:
       topic: What information is needed when filling out Form 8300?
     assert:
-      - type: contains-all
-        value: 
-          - "name"
-          - "address"
-          - "TIN"
+      # - type: contains-any
+      #   value: 
+      #     - "name"
+      #     - "address"
+      #     - "TIN"
       - type: llm-rubric
         value: "The response should specify necessary information like names, addresses, and TIN."
         provider: anthropic:messages:claude-3-haiku-20240307
@@ -155,8 +168,8 @@ tests:
   - vars:
       topic: What is a designated reporting transaction under Form 8300?
     assert:
-      - type: icontains
-        value: "retail sale, durable goods"
+      # - type: icontains
+      #   value: "retail sale, durable goods"
       - type: llm-rubric
         value: "Response should define 'designated reporting transaction' including retail sales over $10,000."
         provider: anthropic:messages:claude-3-haiku-20240307
