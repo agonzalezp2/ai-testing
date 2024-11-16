@@ -70,7 +70,7 @@ tests:
         provider: anthropic:messages:claude-3-haiku-20240307
       - type: cost
         threshold: 0.01
-      -type: latency
+      - type: latency
         threshold: 200
 
   - vars:
