@@ -118,10 +118,10 @@ tests:
       # - type: context-relevance
       #   threshold: 0.9
       #   metric: RAGAS-context-relevance
-      - type: context-faithfulness
-        provider: anthropic:messages:claude-3-haiku-20240307
-        threshold: 0.9
-        metric: RAGAS-context-faithfulness
+      # - type: context-faithfulness
+      #   provider: anthropic:messages:claude-3-haiku-20240307
+      #   threshold: 0.9
+      #   metric: RAGAS-context-faithfulness
 
       # - type: llm-rubric
       #   value: "Response should explain transactions within a 24-hour period may be treated as related."
@@ -139,26 +139,26 @@ tests:
         value: "Answer should mention penalties, including potential fines and imprisonment."
         provider: anthropic:messages:claude-3-haiku-20240307
 
-  # - vars:
-  #     topic: What information is needed when filling out Form 8300?
-  #   assert:
-  #     - type: contains-all
-  #       value: 
-  #         - "name"
-  #         - "address"
-  #         - "TIN"
-  #     - type: llm-rubric
-  #       value: "The response should specify necessary information like names, addresses, and TIN."
-  #       provider: anthropic:messages:claude-3-haiku-20240307
+  - vars:
+      topic: What information is needed when filling out Form 8300?
+    assert:
+      - type: contains-all
+        value: 
+          - "name"
+          - "address"
+          - "TIN"
+      - type: llm-rubric
+        value: "The response should specify necessary information like names, addresses, and TIN."
+        provider: anthropic:messages:claude-3-haiku-20240307
 
-  # - vars:
-  #     topic: What is a designated reporting transaction under Form 8300?
-  #   assert:
-  #     - type: icontains
-  #       value: "retail sale of durable goods"
-  #     - type: llm-rubric
-  #       value: "Response should define 'designated reporting transaction' including retail sales over $10,000."
-  #       provider: anthropic:messages:claude-3-haiku-20240307
+  - vars:
+      topic: What is a designated reporting transaction under Form 8300?
+    assert:
+      - type: icontains
+        value: "retail sale of durable goods"
+      - type: llm-rubric
+        value: "Response should define 'designated reporting transaction' including retail sales over $10,000."
+        provider: anthropic:messages:claude-3-haiku-20240307
 
   # - vars:
   #     topic: Do installment payments over $10,000 need to be reported?
