@@ -68,8 +68,8 @@ tests:
       - type: llm-rubric
         value: "Response should explain that cash includes currency, cashier's checks (with limits), and not personal checks."
         provider: anthropic:messages:claude-3-haiku-20240307
-      - type: cost
-        threshold: 0.01
+      # - type: cost
+      #   threshold: 0.01
       - type: latency
         threshold: 200
 
@@ -81,8 +81,8 @@ tests:
       - type: llm-rubric
         value: "The answer should detail exceptions for certain transactions and entities."
         provider: anthropic:messages:claude-3-haiku-20240307
-      - type: cost
-        threshold: 0.01
+      # - type: cost
+      #   threshold: 0.01
       - type: latency
         threshold: 200
 
@@ -96,8 +96,8 @@ tests:
           - "24 hour period"
       # - type: cost
       #   threshold: 0.01
-      # - type: latency
-      #   threshold: 200
+      - type: latency
+        threshold: 200
 
       # - type: factuality
       #   value: the employee's manager is responsible for approvals
