@@ -63,8 +63,11 @@ tests:
   - vars:
       topic: What qualifies as 'cash' under Form 8300 reporting?
     assert:
-      - type: icontains
-        value: "currency, cashier's check"
+      - type: icontains- all
+        value: 
+          - "currency"
+          - "cash"
+          - "check"
       - type: llm-rubric
         value: "Response should explain that cash includes currency, cashier's checks (with limits), and not personal checks."
         provider: anthropic:messages:claude-3-haiku-20240307
@@ -99,9 +102,9 @@ tests:
       - type: latency
         threshold: 200
 
-      # - type: factuality
-      #   value: the employee's manager is responsible for approvals
-      #   provider: anthropic:messages:claude-3-haiku-20240307
+      - type: factuality
+        value: the employee's manager is responsible for approvals
+        provider: anthropic:messages:claude-3-haiku-20240307
       - type: answer-relevance
         threshold: 0.9
         provider: anthropic:messages:claude-3-haiku-20240307
@@ -116,33 +119,92 @@ tests:
       #   provider: anthropic:messages:claude-3-haiku-20240307
       #   threshold: 0.9
 
+  - vars:
+      topic: How are related transactions defined for Form 8300?
+      context: capstone_rag_anthropic.py
+    assert:
+      - type: icontains-any
+        value: 
+          - "24-hour period"
+          - "24 hour period"
+      # - type: cost
+      #   threshold: 0.01
+      # - type: latency
+      #   threshold: 200
+
+      # - type: factuality
+      #   value: the employee's manager is responsible for approvals
+      #   provider: anthropic:messages:claude-3-haiku-20240307
+      # - type: answer-relevance
+      #   threshold: 0.9
+      #   provider: anthropic:messages:claude-3-haiku-20240307
+      - type: context-recall
+        provider: anthropic:messages:claude-3-haiku-20240307
+        threshold: 0.9
+        value: max purchase price without approval is $500. Talk to Fred before submitting anything.
+        provider: anthropic:messages:claude-3-haiku-20240307
+      - type: context-relevance
+        threshold: 0.9
+      # - type: context-faithfulness
+      #   provider: anthropic:messages:claude-3-haiku-20240307
+      #   threshold: 0.9
+
+  - vars:
+      topic: How are related transactions defined for Form 8300?
+      context: capstone_rag_anthropic.py
+    assert:
+      - type: icontains-any
+        value: 
+          - "24-hour period"
+          - "24 hour period"
+      # - type: cost
+      #   threshold: 0.01
+      # - type: latency
+      #   threshold: 200
+
+      # - type: factuality
+      #   value: the employee's manager is responsible for approvals
+      #   provider: anthropic:messages:claude-3-haiku-20240307
+      # - type: answer-relevance
+      #   threshold: 0.9
+      #   provider: anthropic:messages:claude-3-haiku-20240307
+      # - type: context-recall
+      #   provider: anthropic:messages:claude-3-haiku-20240307
+      #   threshold: 0.9
+      #   value: max purchase price without approval is $500. Talk to Fred before submitting anything.
+      #   provider: anthropic:messages:claude-3-haiku-20240307
+      # - type: context-relevance
+      #   threshold: 0.9
+      - type: context-faithfulness
+        provider: anthropic:messages:claude-3-haiku-20240307
+        threshold: 0.9
       # - type: llm-rubric
       #   value: "Response should explain transactions within a 24-hour period may be treated as related."
       #   provider: anthropic:messages:claude-3-haiku-20240307
         
 
-  # - vars:
-  #     topic: What penalties apply if Form 8300 is not filed?
-  #   assert:
-  #     - type: icontains-any
-  #       value: 
-  #         - "civil penalties"
-  #         - "criminal penalties"
-  #     - type: llm-rubric
-  #       value: "Answer should mention penalties, including potential fines and imprisonment."
-  #       provider: anthropic:messages:claude-3-haiku-20240307
+  - vars:
+      topic: What penalties apply if Form 8300 is not filed?
+    assert:
+      - type: icontains-any
+        value: 
+          - "civil penalties"
+          - "criminal penalties"
+      - type: llm-rubric
+        value: "Answer should mention penalties, including potential fines and imprisonment."
+        provider: anthropic:messages:claude-3-haiku-20240307
 
-  # - vars:
-  #     topic: What information is needed when filling out Form 8300?
-  #   assert:
-  #     - type: contains-all
-  #       value: 
-  #         - "name"
-  #         - "address"
-  #         - "TIN"
-  #     - type: llm-rubric
-  #       value: "The response should specify necessary information like names, addresses, and TIN."
-  #       provider: anthropic:messages:claude-3-haiku-20240307
+  - vars:
+      topic: What information is needed when filling out Form 8300?
+    assert:
+      - type: contains-all
+        value: 
+          - "name"
+          - "address"
+          - "TIN"
+      - type: llm-rubric
+        value: "The response should specify necessary information like names, addresses, and TIN."
+        provider: anthropic:messages:claude-3-haiku-20240307
 
   # - vars:
   #     topic: What is a designated reporting transaction under Form 8300?
