@@ -221,7 +221,7 @@ def retrieve_documents(question: str) -> str:
 
     relevant_documents = vectorstore_faiss.similarity_search_by_vector(query_embedding, k=3)
     
-    return f'<Documents similar to {question}>'
+    return f'<Documents similar to {relevant_documents}>'
 
 def get_var(var_name, prompt, other_vars):
     question = other_vars['question']
