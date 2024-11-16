@@ -211,7 +211,11 @@ def parse_args():
 # Get context for metric evaluation
 def retrieve_documents(question: str) -> str:
     # Calculate embeddings, search vector db...
-
+    voyageai_embeddings = VoyageAIEmbeddings(model="voyage-3")
+    vectorstore_faiss = FAISS.load_local("llm_faiss_index",
+                                         voyageai_embeddings,
+                                         allow_dangerous_deserialization=True)
+    #wrapper_store_faiss = VectorStoreIndexWrapper(vectorstore=vectorstore_faiss)
     query_embedding = vectorstore_faiss.embedding_function.embed_query(question)
     #np.array(query_embedding)
 
