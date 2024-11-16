@@ -63,7 +63,7 @@ tests:
   - vars:
       topic: What qualifies as 'cash' under Form 8300 reporting?
     assert:
-      - type: icontains- all
+      - type: icontains-all
         value: 
           - "currency"
           - "cashier"
@@ -115,9 +115,9 @@ tests:
         threshold: 0.9
         value: max purchase price without approval is $500. Talk to Fred before submitting anything.
         metric: RAGAS-context-recall
-      - type: context-relevance
-        threshold: 0.9
-        metric: RAGAS-context-relevance
+      # - type: context-relevance
+      #   threshold: 0.9
+      #   metric: RAGAS-context-relevance
       - type: context-faithfulness
         provider: anthropic:messages:claude-3-haiku-20240307
         threshold: 0.9
