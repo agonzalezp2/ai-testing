@@ -91,6 +91,7 @@ tests:
 
   - vars:
       topic: How are related transactions defined for Form 8300?
+      query: How are related transactions defined for Form 8300?
       context: capstone_rag_anthropic.py
     assert:
       - type: icontains-any
@@ -115,13 +116,13 @@ tests:
         threshold: 0.9
         value: max purchase price without approval is $500. Talk to Fred before submitting anything.
         metric: RAGAS-context-recall
-      # - type: context-relevance
-      #   threshold: 0.9
-      #   metric: RAGAS-context-relevance
-      # - type: context-faithfulness
-      #   provider: anthropic:messages:claude-3-haiku-20240307
-      #   threshold: 0.9
-      #   metric: RAGAS-context-faithfulness
+      - type: context-relevance
+        threshold: 0.9
+        metric: RAGAS-context-relevance
+      - type: context-faithfulness
+        provider: anthropic:messages:claude-3-haiku-20240307
+        threshold: 0.9
+        metric: RAGAS-context-faithfulness
 
       # - type: llm-rubric
       #   value: "Response should explain transactions within a 24-hour period may be treated as related."
@@ -155,7 +156,7 @@ tests:
       topic: What is a designated reporting transaction under Form 8300?
     assert:
       - type: icontains
-        value: "retail sale of durable goods"
+        value: "retail sale, durable goods"
       - type: llm-rubric
         value: "Response should define 'designated reporting transaction' including retail sales over $10,000."
         provider: anthropic:messages:claude-3-haiku-20240307
