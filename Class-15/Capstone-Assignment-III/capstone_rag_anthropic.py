@@ -26,7 +26,7 @@ from langchain_anthropic import ChatAnthropic
 
 default_prompt_template = """
 
-Human: Use the following pieces of context to provide a concise answer to the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
+Human: Use the following pieces of context to provide a concise answer to the question at the end. If you do not know the answer, just say that you do not know, do not try to make up an answer.
 <context>
 {context}
 </context
@@ -178,7 +178,7 @@ if not validate_cached_index(stored_faiss_index):
     vectorstore_faiss = FAISS.from_documents(docs, voyageai_embeddings)
     vectorstore_faiss.save_local("llm_faiss_index")
 
-else:
+else: #load chache version
     if verbose:
         print("Loading cached FAISS index")
     vectorstore_faiss = FAISS.load_local("llm_faiss_index",
@@ -207,6 +207,31 @@ def parse_args():
     parser.add_argument('--prompt_template', type=str, required=False, help='The prompt template to use for the RAG process')
     parser.add_argument('--query', type=str, required=False, help='The query to use for the RAG process')
     return parser.parse_args()
+
+# Get context for metric evaluation
+def retrieve_documents(question: str) -> str:
+    # Calculate embeddings, search vector db...
+
+    query_embedding = vectorstore_faiss.embedding_function.embed_query(question)
+    #np.array(query_embedding)
+
+    relevant_documents = vectorstore_faiss.similarity_search_by_vector(query_embedding, k=3)
+    
+    return f'<Documents similar to {question}>'
+
+def get_var(var_name, prompt, other_vars):
+    question = other_vars['question']
+
+    context = retrieve_documents(question)
+    return {
+        'output': context
+    }
+
+    # In case of error:
+    # return {
+    #     'error': 'Error message'
+    # }
+
 
 
 # If running as a script, then execute the following
@@ -246,10 +271,8 @@ if __name__ == "__main__":
         return_source_documents=True,
         chain_type_kwargs={"prompt": llm_prompt}
     )
-    print ("-------------------------- \n \n retrival: \n")
-    print(qa)
-    print("\n")
+
     answer = qa.invoke({"query": query_to_use})
-    # print_ww(answer['result'])
-    print(answer['result'])
+    print_ww(answer['result'])
+    #print_ww(answer['source_documents'])
 
