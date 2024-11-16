@@ -132,7 +132,8 @@ tests:
       - type: context-recall
         provider: anthropic:messages:claude-3-haiku-20240307
         threshold: 0.9
-      - type: RAGAS-context-recall
+        metric: RAGAS-context-recall
+      - type: context-faithfulness
         provider: anthropic:messages:claude-3-haiku-20240307
         threshold: 0.9
         metric: RAGAS-context-faithfulness
