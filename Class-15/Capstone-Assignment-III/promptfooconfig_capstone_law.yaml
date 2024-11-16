@@ -105,11 +105,11 @@ tests:
 
       - type: factuality
         value: the employee's manager is responsible for approvals
-        provider: voyage:voyage-3
+        #provider: voyage:voyage-3
         metric: RAGAS-factuality
       - type: answer-relevance
         threshold: 0.9
-        provider: voyage:voyage-3
+        #provider: voyage:voyage-3
         metric: RAGAS-answer-relevance
       - type: context-relevance
         threshold: 0.9
@@ -132,10 +132,10 @@ tests:
   #     - type: context-recall
   #       threshold: 0.8
   #       value: the employee's manager is responsible for approvals
-  #       provider: voyage:voyage-3
+  #       #provider: voyage:voyage-3
   #       metric: RAGAS-context-recall
   #     - type: context-faithfulness
-  #       provider: voyage:voyage-3
+  #       #provider: voyage:voyage-3
   #       threshold: 0.8
   #       metric: RAGAS-context-faithfulness
 
