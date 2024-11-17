@@ -76,6 +76,7 @@ prompt_template_one = """
 
 Human: Use the following pieces of context to provide a concise answer to the question at the end. 
 If you don't know the answer, just say that you don't know, don't try to make up an answer.
+Do not forget to mention the source of the information.
 <context>
 {context}
 </context>
@@ -88,6 +89,7 @@ Assistant:
 prompt_template_two = """
 Use the following pieces of context to provide a concise answer to the question at the end. 
 If you don't know the answer, just say that you don't know, don't try to make up an answer.
+Do not forget to mention the source of the information.
 <context>
 {context}
 </context>
@@ -100,6 +102,7 @@ You are an expert in US taxes.
 Use the following pieces of context to provide a concise answer to the question at the end. 
 If you don't know the answer, just say that you don't know, don't try to make up an answer.
 Answer in a way that can be readily understood by a person with little specific tax knowledge.
+Mention the source of the information so the answer icrease its trust.
 <context>
 {context}
 </context>
