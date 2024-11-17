@@ -219,12 +219,12 @@ def retrieve_documents(question: str) -> str:
     query_embedding = vectorstore_faiss.embedding_function.embed_query(question)
     #np.array(query_embedding)
 
-    relevant_documents = vectorstore_faiss.similarity_search_by_vector(query_embedding, k=3)
+    relevant_documents = vectorstore_faiss.similarity_search_by_vector(query_embedding, k=5)
 
-    context = ''
+    context = '<Documents similar to {question}>'
 
     for i, rel_doc in enumerate(relevant_documents):
-        context = context + (f'## Document {i+1}: {rel_doc.page_content} \n')
+        context = context + '\n\n'+(f'**Document {i+1}:** {rel_doc.page_content}')
     
     return context
 
